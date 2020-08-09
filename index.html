@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Monster Killer</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="panel scores">
+            <div class="score">
+                <h1>Player</h1>
+                <div class="life-bar">
+                    <div class="life" 
+                        :class="{danger: playerLife < 20}" 
+                        :style="{width: playerLife + '%'}">
+                    </div>
+                </div>
+                <div>{{ playerLife }}%</div>
+            </div>
+            <div class="score">
+                <h1>Monster</h1>
+                <div class="life-bar">
+                    <div class="life" 
+                        :class="{danger: monsterLife < 20}" 
+                        :style="{width: monsterLife + '%'}">
+                    </div>
+                </div>
+                <div>{{ monsterLife }}%</div>
+            </div>
+        </div>
+        <div v-if="hasResult" class="panel result">
+            <div  v-if="win" class="win">
+                You win!!!
+            </div>
+            <div v-else class="lose">
+                You lose!!!
+            </div>
+        </div>
+        <div class="panel buttons">
+            <tamplate v-if="running">
+                <button @click="attack(false)" class="btn atack">Atack</button>
+                <button @click="attack(true)" class="btn special-atack">Special Atack</button>
+                <button @click="healAndHurt" class="btn heal">Heal</button>
+                <button @click="giveUp" class="btn give-up">Give Up</button>
+            </tamplate>
+            <button v-else @click="start" class="btn new-game">New Game</button>
+        </div>
+        <div v-if="logs.length" class="panel logs">
+            <ul>
+                <li v-for="log in logs" 
+                    class="log"
+                    :class="log.clazz">
+                    {{ log.text }}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src='app.js'></script>
+</body>
+</html>
